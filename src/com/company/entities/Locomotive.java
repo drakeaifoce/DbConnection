@@ -44,5 +44,10 @@ public class Locomotive
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString(){
+        return "Locomotive[id: " + getId() + ", name: " + getName() + ", train_id: " + getTrainId();
+    }
 }
 

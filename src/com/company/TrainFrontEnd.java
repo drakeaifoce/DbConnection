@@ -3,6 +3,7 @@ package com.company;
 import com.company.controllers.TrainController;
 import com.company.entities.Train;
 import com.company.repositories.TrainRepository;
+import com.company.repositories.interfaces.ILocomotiveRepository;
 import com.company.repositories.interfaces.ITrainRepository;
 import com.company.repositories.interfaces.IUserRepository;
 
@@ -13,8 +14,8 @@ public class TrainFrontEnd
     private final TrainController controller;
     private final Scanner scanner;
 
-    public TrainFrontEnd(ITrainRepository trainRepository) {
-        controller = new TrainController(trainRepository);
+    public TrainFrontEnd(ITrainRepository trainRepository, ILocomotiveRepository locomotiveRepository) {
+        controller = new TrainController(trainRepository, locomotiveRepository);
         scanner = new Scanner(System.in);
     }
 
@@ -26,6 +27,9 @@ public class TrainFrontEnd
             System.out.println("1. Get all trains");
             System.out.println("2. Get train by id");
             System.out.println("3. Create train");
+            System.out.println("4. Get all locomotives");
+            System.out.println("5. Get locomotive by id");
+            System.out.println("6. Create locomotive");
             System.out.println("0. Exit");
             System.out.println();
             try {
@@ -37,7 +41,17 @@ public class TrainFrontEnd
                     getTrainByIdMenu();
                 } else if (option == 3) {
                     createTrainMenu();
-                } else {
+                } else if(option == 4){
+                    getAllLocomotivesMenu();
+                }
+                else if(option == 5){
+                    getLocomotiveByIdMenu();
+                }
+                else if(option == 6){
+
+                }
+
+                else {
                     break;
                 }
             } catch (Exception e) {
@@ -55,11 +69,24 @@ public class TrainFrontEnd
         System.out.println(response);
     }
 
+    public void getAllLocomotivesMenu() {
+        String response = controller.getAllLocomotives();
+        System.out.println(response);
+    }
+
     public void getTrainByIdMenu() {
         System.out.println("Please enter id");
 
         int id = scanner.nextInt();
-        String response = controller.getTrain(id);
+        Train train = controller.getTrain(id);
+        System.out.println((train == null ? "Train was not found!" : train.toString()));
+    }
+
+    public void getLocomotiveByIdMenu() {
+        System.out.println("Please enter id");
+
+        int id = scanner.nextInt();
+        String response = controller.getLocomotive(id);
         System.out.println(response);
     }
 
@@ -70,6 +97,26 @@ public class TrainFrontEnd
         int capacity = scanner.nextInt();
 
         String response = controller.createTrain(name,capacity);
+        System.out.println(response);
+    }
+
+    public void createLocomotiveMenu() throws Exception {
+        System.out.println("Please enter train id");
+        int train_id = scanner.nextInt();
+
+        try{
+            var id = controller.getTrain(train_id);
+        }
+        catch(Exception ex){
+            // System.out.println("Train was not found");
+            throw new Exception("Train was not found");
+        }
+
+        System.out.println("Please enter name");
+        String name = scanner.next();
+
+
+        String response = controller.createLocomotive(name,train_id);
         System.out.println(response);
     }
 }

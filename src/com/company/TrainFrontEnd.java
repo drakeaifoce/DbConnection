@@ -105,7 +105,7 @@ public class TrainFrontEnd
         int train_id = scanner.nextInt();
 
         try{
-            var id = controller.getTrain(train_id);
+            var id = controller.getTrain(train_id).getId();
         }
         catch(Exception ex){
             // System.out.println("Train was not found");

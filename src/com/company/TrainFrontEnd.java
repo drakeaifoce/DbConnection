@@ -33,7 +33,7 @@ public class TrainFrontEnd
             System.out.println("0. Exit");
             System.out.println();
             try {
-                System.out.print("Enter option (1-3): ");
+                System.out.print("Enter option (1-6): ");
                 int option = scanner.nextInt();
                 if (option == 1) {
                     getAllTrainsMenu();
@@ -48,7 +48,7 @@ public class TrainFrontEnd
                     getLocomotiveByIdMenu();
                 }
                 else if(option == 6){
-
+                    createLocomotiveMenu();
                 }
 
                 else {
